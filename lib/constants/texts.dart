@@ -4,6 +4,8 @@ class Texts {
 
   static const String game = 'JOGO:';
   static const String attempts = 'TENTATIVAS:';
+  static const String tips = 'DICAS:';
+  static const String tip = 'Dica';
 
   static const String howToPlay = 'Como Jogar';
   static const String howToPlayText1 =

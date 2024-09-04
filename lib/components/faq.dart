@@ -10,7 +10,7 @@ class Faq extends StatelessWidget {
     return Column(
       children: [
         Padding(
-          padding: Styles.verticalPadding,
+          padding: Styles.bottomPadding,
           child: Row(
             children: [
               const Padding(
@@ -27,14 +27,14 @@ class Faq extends StatelessWidget {
         ExpansionTile(
           title: Text(
             Texts.faqQuestion1,
-            style: Styles.gameStatsDescription,
+            style: Styles.defaultTextBoldStyle,
           ),
           children: [
             Padding(
               padding: Styles.padding,
               child: Text(
                 Texts.faqAnswer1,
-                style: Styles.faqDescription,
+                style: Styles.defaultTextStyle,
               ),
             ),
           ],
@@ -42,14 +42,14 @@ class Faq extends StatelessWidget {
         ExpansionTile(
           title: Text(
             Texts.faqQuestion2,
-            style: Styles.gameStatsDescription,
+            style: Styles.defaultTextBoldStyle,
           ),
           children: [
             Padding(
               padding: Styles.padding,
               child: Text(
                 Texts.faqAnswer2,
-                style: Styles.faqDescription,
+                style: Styles.defaultTextStyle,
               ),
             ),
           ],

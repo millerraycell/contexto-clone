@@ -11,7 +11,7 @@ class InitialGame extends StatelessWidget {
     return const Column(
       children: [
         Padding(
-          padding: Styles.verticalPadding,
+          padding: Styles.bottomPadding,
           child: HowToPlay(),
         ),
         Faq(),

@@ -17,7 +17,7 @@ class HowToPlay extends StatelessWidget {
       child: Column(
         children: [
           Padding(
-            padding: Styles.verticalPadding,
+            padding: Styles.bottomPadding,
             child: Row(
               children: [
                 const Padding(
@@ -32,28 +32,28 @@ class HowToPlay extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: Styles.verticalPadding,
+            padding: Styles.bottomPadding,
             child: Text(
               Texts.howToPlayText1,
               style: Styles.howToPlayText,
             ),
           ),
           Padding(
-            padding: Styles.verticalPadding,
+            padding: Styles.bottomPadding,
             child: Text(
               Texts.howToPlayText2,
               style: Styles.howToPlayText,
             ),
           ),
           Padding(
-            padding: Styles.verticalPadding,
+            padding: Styles.bottomPadding,
             child: Text(
               Texts.howToPlayText3,
               style: Styles.howToPlayText,
             ),
           ),
           Padding(
-            padding: Styles.verticalPadding,
+            padding: Styles.bottomPadding,
             child: Text(
               Texts.howToPlayText4,
               style: Styles.howToPlayText,
