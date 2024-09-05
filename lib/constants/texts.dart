@@ -6,6 +6,9 @@ class Texts {
   static const String attempts = 'TENTATIVAS:';
   static const String tips = 'DICAS:';
   static const String tip = 'Dica';
+  static const String alreadyUsedPart1 = 'A palavra';
+  static const String alreadyUsedPart2 = 'já foi.';
+  static const String typeWord = 'Digite uma palavra';
 
   static const String howToPlay = 'Como Jogar';
   static const String howToPlayText1 =

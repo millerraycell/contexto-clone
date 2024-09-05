@@ -27,7 +27,10 @@ class _HomeState extends State<Home> {
   bool isRepeatedWord = false;
 
   List<WordItem> wordList = [];
-  WordItem currentItem = WordItem(0, '');
+  WordItem currentItem = const WordItem(
+    distance: 0,
+    word: '',
+  );
 
   final WordService wordService = WordService();
 
@@ -36,7 +39,7 @@ class _HomeState extends State<Home> {
     super.didUpdateWidget(oldWidget);
     setState(() {
       if (widget.action == Texts.tip) {
-        tips++;
+        getTip();
       }
     });
   }
@@ -62,7 +65,7 @@ class _HomeState extends State<Home> {
                 border: OutlineInputBorder(
                   borderSide: BorderSide(color: Colors.black),
                 ),
-                hintText: 'Digite uma palavra',
+                hintText: Texts.typeWord,
                 filled: true,
                 fillColor: Colors.white,
                 focusedBorder: OutlineInputBorder(
@@ -73,7 +76,7 @@ class _HomeState extends State<Home> {
             ),
           ),
           Offstage(
-            offstage: isRepeatedWord || currentWord.isEmpty,
+            offstage: isRepeatedWord || currentItem.distance == 0,
             child: Padding(
               padding: Styles.verticalPadding,
               child: currentItem,
@@ -86,7 +89,7 @@ class _HomeState extends State<Home> {
               child: Row(
                 children: [
                   Text(
-                    'A palavra',
+                    Texts.alreadyUsedPart1,
                     style: Styles.defaultTextStyle,
                   ),
                   Text(
@@ -94,7 +97,7 @@ class _HomeState extends State<Home> {
                     style: Styles.defaultTextBoldStyle,
                   ),
                   Text(
-                    'já foi.',
+                    Texts.alreadyUsedPart2,
                     style: Styles.defaultTextStyle,
                   ),
                 ],
@@ -108,6 +111,7 @@ class _HomeState extends State<Home> {
           Offstage(
             offstage: !(attempts != 0 || tips != 0),
             child: WordList(
+              currentWord: currentWord,
               items: wordList,
             ),
           ),
@@ -119,27 +123,23 @@ class _HomeState extends State<Home> {
   void computeWordEntry(String wordTyped) async {
     isRepeatedWord = false;
     if (wordAlreadyExists(wordTyped)) {
-      currentDistance = -2;
-      currentWord = wordTyped;
       setState(() {
+        currentDistance = -2;
+        currentWord = wordTyped;
         isRepeatedWord = true;
       });
-      inputController.clear();
     } else {
       final distance = await wordService.getDistance(wordTyped);
       setState(() {
         currentWord = wordTyped;
         currentDistance = distance.distance;
-        if (wordService.isValid(currentDistance)) {
-          wordList.add(WordItem(distance.distance, wordTyped));
-          currentItem = WordItem(distance.distance, wordTyped);
-          wordList
-              .sort((word1, word2) => word1.distance.compareTo(word2.distance));
+        if (wordService.isValid(distance.distance)) {
+          addWords(distance.distance, distance.word);
         }
         attempts++;
-        inputController.clear();
       });
     }
+    inputController.clear();
   }
 
   bool wordAlreadyExists(String word) {
@@ -150,5 +150,29 @@ class _HomeState extends State<Home> {
       }
     }
     return alreadyExists;
+  }
+
+  void getTip() async {
+    int tipValue;
+
+    if (wordList.isNotEmpty) {
+      tipValue = wordList[0].distance < tipsDistance
+          ? wordList[0].distance ~/ 2
+          : tipsDistance;
+    } else {
+      tipValue = tipsDistance;
+    }
+
+    final tip = await wordService.getTip(tipValue);
+    setState(() {
+      addWords(tip.distance, tip.word);
+      tipsDistance = (tipValue ~/ 2);
+      tips++;
+    });
+  }
+
+  void addWords(int distance, String word) {
+    currentItem = WordItem(distance: distance, word: word);
+    wordList.add(currentItem);
   }
 }
